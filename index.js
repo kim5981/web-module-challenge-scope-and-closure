@@ -98,7 +98,7 @@ function inning(){
   return Math.floor(Math.random() * 3);
     
 }
-console.log("- Task 2: ", inning());
+//console.log("- Task 2: ", inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -124,25 +124,27 @@ function finalScore(inning, numInnings){
   return {"Home": homeScore, "Away": awayScore,};
 
 }
-console.log("- Task 3: ", finalScore(inning, 9));
+//console.log("- Task 3: ", finalScore(inning, 9));
+
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
-  1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
+  1. Receive a callback function - you will pass in the --> inning <-- function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
-
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+//inning is a random # gen of 1-2
+function getInningScore(inning) {
+  return {"Home" : inning(), "Away" : inning(), };
 }
 
+console.log("- Task 4: ", getInningScore(inning));
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
   1. Receive the callback function `getInningScore` from Task 4
   2. Receive the callback function `inning` from Task 2
   3. Receive a number of innings to be played
-  4. Return an array where each of it's index values equals a string stating the
-  Home and Away team's scores for each inning.  Not the cummulative score.
+  4. Return an array where each of its index values equals a string stating the
+  Home and Away team's scores for each inning.  Not the cumulative score.
   5. If there's a tie at the end of the innings, add this message containing the score to the end of the array:  "This game will require extra innings: Away 12 - Home 12"  (see tie example below)
      If there isn't a tie, add this message to the end of the array: "Final Score: Away 13 - Home 11"  (see no tie example below)
   
@@ -177,9 +179,31 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(getInningScore, inning, numInnings) {
+  //create an array to store the info example ^^
+
+  const newArray = [];
+  //set home and away scores to 0 for loop 
+  let home = 0;
+  let away = 0;
+
+  for (let i = 0; i < numInnings; i++) { 
+    const currentInning = getInningScore(inning);
+    home = home + currentInning.Home
+    away = away + currentInning.Away
+
+    newArray.push( `Inning ${i + 1}: Away ${currentInning.Away} - Home ${currentInning.Home}` )
+    
+  }
+  if (home === away) {
+    newArray.push(`This game will require extra innings: Away ${currentInning.Away} - Home ${currentInning.Home}`)
+  } else {
+    return newArray.push(`Final Score: Away ${currentInning.Away} - Home ${currentInning.Home}`)
+  }
+  return newArray
 }
+
+console.log("- Task 5: ", scoreboard(getInningScore, inning, 9));
 
 
 

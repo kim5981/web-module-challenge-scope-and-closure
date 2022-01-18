@@ -17,6 +17,14 @@ function processFirstItem(stringList, callback) {
   return callback(stringList[0])
 }
 console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
+//processFirstItem takes stringList..
+//stringList is a placeholder that holds ['foo', 'bar']
+//..and takes callback ..
+//callback is a function that takes a variable str and returns that value + itself
+//.. processFirstItem returns callback (callback does str+str) with input
+//of stringList[0] which if you remember stringList holds ['foo', 'bar']
+//so stringList[0] is 'foo'
+//so if str here = 'foo' then str + str would = 'foofoo' 
 
 // ⭐️ Example Challenge END ⭐️
 
@@ -28,28 +36,52 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
-  
+ 
+  -counter 1 takes a nested function `counter ()` to increase the variable `count` from
+ counterMaker. 
+
+ -counter 2 declares and initializes count in the global scope instead of within the function
+ and references it within the function th increase the count by one when counter2 is called
+
+
   2. Which of the two uses a closure? How can you tell?
+  A closure occurs in counter one when counter() reaches out to counterMaker() for the variable count since 
+  count only exists in the scope counterMaker(), not counter();
   
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+     - Counter 1 would be better when you want to create a function that creates a counter to increase every time, and update every time.
+     Especially since count exists within the scope of counterMaker()
+     - Counter 2 would be better when you simply want to make a counter and use it once 
+
 */
 
-// counter1 code
+//--- counter1 code ---
 function counterMaker() {
+  //function called counterMaker with no param
   let count = 0;
+  //count starts at 0
   return function counter() {
+    //returns a new function called counter
    return count++;
+   //counter increases count by one every time
   }
 }
+//so if we called counter(), it would ref counterMaker to get count and do count++
+//if we called counterMaker(), it would also still return count++ using function counter
+
 
 const counter1 = counterMaker();
+//counterMaker is copied into variable counter1
 
-// counter2 code
+
+//--- counter2 code ---
 let count = 0;
-
+//count starts at 0
 function counter2() {
+  //a new function counter is declared
   return count++;
+  //that returns this count ^^ (from the global scope) and increases it by one
 }
 
 
@@ -62,10 +94,11 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+  return Math.floor(Math.random() * 3);
+    
 }
-
+console.log("- Task 2: ", inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -81,9 +114,17 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(inning, numInnings){
+  let homeScore =0;
+  let awayScore = 0;
+  for (let i = 0; i < numInnings; i++) {
+    homeScore = inning() + homeScore;
+    awayScore = inning() + awayScore;
+  }
+  return {"Home": homeScore, "Away": awayScore,};
+
 }
+console.log("- Task 3: ", finalScore(inning, 9));
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:

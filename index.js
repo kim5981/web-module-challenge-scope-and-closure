@@ -95,10 +95,9 @@ NOTE: This will be a callback function for the tasks below
 */
 
 function inning(){
-  return Math.floor(Math.random() * 3);
-    
+  return Math.floor(Math.random() * 3);   
 }
-//console.log("- Task 2: ", inning());
+console.log("- Task 2: ", inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -133,7 +132,7 @@ Use the getInningScore() function below to do the following:
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 //inning is a random # gen of 1-2
 function getInningScore(inning) {
-  return {"Home" : inning(), "Away" : inning(), };
+  return {"Home" : inning(), "Away" : inning() };
 }
 
 console.log("- Task 4: ", getInningScore(inning));
@@ -179,29 +178,30 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(getInningScore, inning, numInnings) {
-  //create an array to store the info example ^^
-
+function scoreboard(getInningScoreCB, inningCB, numInnings) {
+  //new array stores home and away team scores in string 
   const newArray = [];
-  //set home and away scores to 0 for loop 
-  let home = 0;
-  let away = 0;
-
-  for (let i = 0; i < numInnings; i++) { 
-    const currentInning = getInningScore(inning);
-    home = home + currentInning.Home
-    away = away + currentInning.Away
-
-    newArray.push( `Inning ${i + 1}: Away ${currentInning.Away} - Home ${currentInning.Home}` )
-    
-  }
-  if (home === away) {
-    newArray.push(`This game will require extra innings: Away ${currentInning.Away} - Home ${currentInning.Home}`)
-  } else {
-    return newArray.push(`Final Score: Away ${currentInning.Away} - Home ${currentInning.Home}`)
-  }
-  return newArray
+  //set scores to zero to start 
+  let homeScore = 0;
+  let awayScore = 0;
+ //loop through innings (9)
+  for (let i = 1; i < numInnings; i++) {   
+    //currentInning declared as variable to store vvv which gives random inning scores for home and away: { Home: 0, Away: 1 }
+    let currentInning = getInningScoreCB(inningCB);
+    homeScore = homeScore + currentInning.Home // homeScore = (0) + random # from currentInning object ^^
+    awayScore = awayScore + currentInning.Away // awayScore = (0) + random # from currentInning object ^^
+    //push the string vvv 
+    newArray.push( `Inning ${i}: Away ${currentInning.Away} - Home ${currentInning.Home}` )
+  } //closes the loop
+  
+  if (homeScore === awayScore) {
+    newArray.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`)
+  } else { 
+    return newArray.push(`Final Score: Away ${awayScore} - Home ${homeScore}`);
+  } 
+  return newArray;
 }
+
 
 console.log("- Task 5: ", scoreboard(getInningScore, inning, 9));
 
